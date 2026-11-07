@@ -1,0 +1,58 @@
+name: linecast
+base: core26
+version: '2.12.0'
+title: linecast
+summary: Weather, tides, the sun, the moon, maps and the sky in your terminal
+description: |
+  linecast draws live terminal views from free public data: weather forecasts
+  and alerts, animated radar, tides, the sun's path and daylight, the Moon's
+  phase, a planetarium, and street and terrain maps with directions. It needs
+  no accounts or API keys, and colors follow your terminal theme.
+
+  **Examples**
+
+     linecast weather --location "quebec"
+     linecast radar
+     linecast moon
+     linecast maps --from "portland, maine" --to "portland head light"
+
+  Without a saved location, linecast guesses your location from your IP
+  address. Save one with: linecast location set "Portland, Maine"
+license: MIT
+grade: stable
+confinement: strict
+website: https://github.com/ashuttl/linecast
+source-code:
+  - https://github.com/ashuttl/linecast
+  - https://github.com/sidalit/linecast-snap
+issues:
+  - https://github.com/ashuttl/linecast/issues
+  - https://github.com/sidalit/linecast-snap/issues
+contact: https://github.com/sidalit/linecast-snap/issues
+
+platforms:
+  amd64:
+  arm64:
+
+apps:
+  linecast:
+    command: bin/linecast
+    completer: share/bash-completion/completions/linecast
+    plugs:
+      - network
+
+parts:
+  linecast:
+    plugin: uv
+    source: https://github.com/ashuttl/linecast.git
+    source-tag: v$SNAPCRAFT_PROJECT_VERSION
+    build-snaps:
+      - astral-uv
+    stage-packages:
+      - python3-venv
+    override-build: |
+      craftctl default
+      mkdir -p "$CRAFT_PART_INSTALL/share/bash-completion/completions"
+      "$CRAFT_PART_INSTALL/bin/linecast" completion bash \
+        > "$CRAFT_PART_INSTALL/share/bash-completion/completions/linecast"
+      install -Dm644 LICENSE -t "$CRAFT_PART_INSTALL/share/doc/linecast"
