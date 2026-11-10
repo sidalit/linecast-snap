@@ -52,6 +52,8 @@ parts:
       - python3-venv
     override-build: |
       craftctl default
+      # uv links bin/python to the build path; the store rejects that link.
+      ln -sf python3 "$CRAFT_PART_INSTALL/bin/python"
       mkdir -p "$CRAFT_PART_INSTALL/share/bash-completion/completions"
       "$CRAFT_PART_INSTALL/bin/linecast" completion bash \
         > "$CRAFT_PART_INSTALL/share/bash-completion/completions/linecast"
