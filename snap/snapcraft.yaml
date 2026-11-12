@@ -38,6 +38,9 @@ apps:
   linecast:
     command: bin/linecast
     completer: share/bash-completion/completions/linecast
+    environment:
+      XDG_CONFIG_HOME: $SNAP_USER_DATA/.config
+      XDG_CACHE_HOME: $SNAP_USER_DATA/.cache
     plugs:
       - network
 
