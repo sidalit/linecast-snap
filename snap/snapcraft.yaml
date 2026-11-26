@@ -1,6 +1,6 @@
 name: linecast
 base: core26
-version: '2.12.0'
+version: '2.13.1'
 title: linecast
 summary: Weather, tides, the sun, the moon, maps and the sky in your terminal
 description: |
